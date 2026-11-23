@@ -1149,8 +1149,12 @@ window.addEventListener('scroll',()=>{
 })();
 </script>
 
-</body>
-</html>
+
+
+
+
+
+
 <style id="celebration-carousel-themes">
 /* A deliberate peek of the next invitation tile makes the sideways gallery discoverable. */
 @media(max-width:600px){
@@ -1592,3 +1596,76 @@ window.addEventListener('scroll',()=>{
   .first-card-swipe-cue,.swipe-cue-arrows span{animation:none}
 }
 </style>
+
+<!-- Forced scroll-through gallery: vertical page scrolling drives the horizontal ceremony cards. -->
+<style id="forced-schedule-scroll-style">
+  #wedding-schedule{position:relative!important;overflow:visible!important;padding-bottom:0!important}
+  #wedding-schedule .schedule-pin{
+    position:sticky!important;top:0!important;left:0!important;
+    width:100%!important;height:100svh!important;min-height:100svh!important;
+    max-height:none!important;display:flex!important;align-items:center!important;
+    overflow:hidden!important;overflow-x:hidden!important;overflow-y:hidden!important;
+    padding:18px 0 42px!important;cursor:default!important;
+    scroll-behavior:auto!important;touch-action:pan-y!important;
+  }
+  #wedding-schedule .schedule-main{width:100%!important;max-width:none!important;margin:0!important;overflow:visible!important}
+  #wedding-schedule .day-scroll{
+    display:flex!important;width:max-content!important;max-width:none!important;
+    padding:22px max(6vw,24px) 32px!important;margin:0!important;
+    transform:translate3d(0,0,0);will-change:transform;transition:none!important;
+  }
+  #wedding-schedule .day-card{flex-shrink:0!important}
+  #wedding-schedule .schedule-pin::-webkit-scrollbar{display:none!important}
+  @media(max-width:600px){
+    #wedding-schedule .schedule-pin{height:100svh!important;min-height:100svh!important;padding:12px 0 34px!important}
+    #wedding-schedule .day-scroll{padding:8px 7vw 14px!important;gap:14px!important}
+  }
+</style>
+<script id="forced-schedule-scroll-script">
+(function(){
+  const section=document.getElementById('wedding-schedule');
+  const pin=section?.querySelector('.schedule-pin');
+  const track=section?.querySelector('.day-scroll');
+  if(!section||!pin||!track)return;
+  let travel=0, pinTop=0, ticking=false;
+  const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+  function measure(){
+    // Measure the true horizontal distance while the gallery is in its natural layout.
+    track.style.transform='translate3d(0,0,0)';
+    pin.style.height=window.innerHeight+'px';
+    const heading=section.querySelector('.schedule-heading');
+    const headingHeight=heading?heading.getBoundingClientRect().height:0;
+    travel=Math.max(0,track.scrollWidth-pin.clientWidth);
+    pinTop=section.getBoundingClientRect().top+window.scrollY+headingHeight;
+    section.style.height=(headingHeight+pin.clientHeight+travel)+'px';
+    update();
+  }
+  function update(){
+    ticking=false;
+    const progress=travel?clamp((window.scrollY-pinTop)/travel,0,1):0;
+    track.style.transform=`translate3d(${-travel*progress}px,0,0)`;
+    const cards=[...track.querySelectorAll('.day-card')];
+    const center=pin.getBoundingClientRect().left+pin.clientWidth/2;
+    cards.forEach(card=>{
+      const r=card.getBoundingClientRect();
+      const distance=(r.left+r.width/2-center)/(pin.clientWidth*.72);
+      const abs=Math.min(1.8,Math.abs(distance));
+      const scale=Math.max(.78,1-abs*.13);
+      const rotateY=Math.max(-17,Math.min(17,distance*13));
+      const lift=Math.max(-20,22-abs*30);
+      card.style.transform=`translate3d(0,${lift}px,${-abs*100}px) rotateY(${rotateY}deg) scale(${scale})`;
+      card.style.opacity=String(Math.max(.48,1-abs*.34));
+      card.style.zIndex=String(100-Math.round(abs*10));
+      card.classList.toggle('show',abs<1.05);
+    });
+  }
+  function requestUpdate(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
+  window.addEventListener('scroll',requestUpdate,{passive:true});
+  window.addEventListener('resize',measure,{passive:true});
+  if(document.fonts?.ready)document.fonts.ready.then(measure);
+  if('ResizeObserver' in window){new ResizeObserver(measure).observe(track)}
+  measure();
+})();
+</script>
+</body>
+</html>

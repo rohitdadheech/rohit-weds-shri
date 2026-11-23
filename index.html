@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f7d4c5">
-<title>Rohit Weds Shri | 7–11 December 2026</title>
+<title>Rohit Weds Shri | 6–11 December 2026</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap');
 
@@ -269,6 +269,82 @@ section{position:relative;overflow:hidden}
 <style>
 #fireworksCanvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;mix-blend-mode:screen}
 </style>
+
+<style>
+/* Scroll-driven day gallery: vertical page movement choreographs a horizontal 3D journey. */
+.schedule-scroll-section{position:relative;padding:78px 0 0;background:linear-gradient(180deg,var(--ivory),#fff1e5 55%,#f8dfd2);overflow:visible;isolation:isolate}
+.schedule-heading{padding:0 22px 28px}
+.schedule-header{max-width:690px;margin:0 auto}
+.schedule-title em{font-style:italic;font-weight:inherit}
+.schedule-intro{font-family:"Noto Serif Devanagari",serif;color:#865d52;font-size:1rem;line-height:1.8;margin:0 auto 8px}
+.schedule-description{max-width:590px;margin:8px auto 0;color:#805b58;font-family:"Cormorant Garamond",serif;font-size:1.18rem;line-height:1.55}
+.schedule-main{width:100%;margin:0 auto}
+.schedule-pin{height:100svh;min-height:620px;position:sticky;top:0;display:flex;flex-direction:column;justify-content:center;overflow:hidden;perspective:1400px;isolation:isolate;padding:18px 0 42px}
+.schedule-pin:before{content:"";position:absolute;inset:8% 5%;pointer-events:none;background:radial-gradient(ellipse at center,rgba(255,255,255,.62),transparent 68%);z-index:-1}
+.day-scroll{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:clamp(18px,3vw,42px);width:max-content;will-change:transform;transform:translate3d(0,0,0);perspective:1400px;transform-style:preserve-3d}
+.day-card{position:relative;isolation:isolate;flex:0 0 min(76vw,410px);min-height:500px;display:flex;flex-direction:column;padding:27px 25px 22px;border:1px solid rgba(169,120,63,.32);border-radius:25px;background:linear-gradient(150deg,rgba(255,255,255,.96),rgba(255,247,237,.96) 58%,rgba(248,220,207,.94));box-shadow:0 26px 70px rgba(94,43,40,.16);overflow:hidden;transform-style:preserve-3d;backface-visibility:hidden;opacity:.68;transform:translate3d(0,24px,-90px) rotateY(-13deg) scale(.86);transition:box-shadow .25s ease,border-color .25s ease;will-change:transform,opacity}
+.day-card:before{content:attr(data-day);position:absolute;z-index:-1;right:13px;top:38px;font-family:"Cormorant Garamond",serif;font-size:10rem;line-height:1;color:rgba(169,120,63,.075);font-weight:600}
+.day-card:after{content:"✧";position:absolute;right:25px;bottom:60px;color:rgba(169,120,63,.24);font-size:2.5rem}
+.day-card-top{display:flex;justify-content:space-between;align-items:center;color:var(--gold);font-size:.66rem;letter-spacing:.2em;font-weight:700}.day-place{color:var(--maroon2)}
+.day-date{margin-top:28px;color:var(--maroon2);font-size:.72rem;letter-spacing:.22em;font-weight:600}
+.day-card h3{margin:3px 0 0;color:var(--maroon);font-family:"Cormorant Garamond",serif;font-size:3.25rem;line-height:1}.day-card h3 span{display:block;font-family:Montserrat,Arial,sans-serif;font-size:.69rem;letter-spacing:.2em;color:var(--gold);margin-top:8px;font-weight:600}
+.day-ornament{text-align:center;color:var(--gold);letter-spacing:.35em;margin:20px 0 12px;font-size:1.1rem}
+.day-events{display:grid;gap:0;margin-top:3px}.day-event{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:15px 0;border-bottom:1px solid rgba(169,120,63,.19)}.day-event h4{font-family:"Cormorant Garamond","Noto Serif Devanagari",serif;color:var(--maroon);font-size:1.28rem;line-height:1.12;margin:0 0 5px;font-weight:600}.day-event p{font-family:"Noto Serif Devanagari",serif;color:#805b58;font-size:.82rem;line-height:1.45;margin:0}.day-event time{flex:0 0 auto;text-align:right;color:var(--gold);font-size:.66rem;line-height:1.35;letter-spacing:.06em;font-weight:700;padding-top:3px;max-width:112px}
+.day-card-foot{margin-top:auto;padding-top:20px;text-align:center;color:var(--gold);font-family:"Cormorant Garamond",serif;font-size:1.05rem;font-style:italic;letter-spacing:.04em}.day-card-note{margin-top:13px;color:#805b58;font-family:"Noto Serif Devanagari",serif;font-size:.72rem;line-height:1.5;text-align:center}.day-card-wedding{background:linear-gradient(150deg,#fff9f0,#f8e4d8 58%,#f2d0c4);border-color:rgba(124,41,55,.3)}
+.scroll-cue{position:absolute;bottom:18px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:11px;margin:0 auto;color:var(--gold);font-size:.62rem;letter-spacing:.2em;font-weight:700}.scroll-cue svg{width:48px;height:30px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}.cue-arrow{animation:cueSlide 1.2s ease-in-out infinite}@keyframes cueSlide{0%,100%{transform:translateX(0);opacity:.5}50%{transform:translateX(4px);opacity:1}}
+@media(min-width:760px){.day-card{flex-basis:440px;min-height:530px}.day-card-wedding{min-height:590px}}
+@media(max-width:600px){.schedule-scroll-section{padding-top:58px}.schedule-pin{height:88svh;min-height:590px;padding:10px 0 44px}.day-card{flex-basis:82vw;min-height:490px;padding:23px 20px 20px}.day-event h4{font-size:1.16rem}.day-event time{font-size:.61rem;max-width:96px}.day-card-wedding{min-height:565px}.scroll-cue{font-size:.55rem}}
+@media(prefers-reduced-motion:reduce){.cue-arrow{animation:none}.schedule-scroll-section{height:auto!important}.schedule-pin{position:relative;top:auto;height:auto;min-height:0;overflow:visible}.day-scroll{width:auto;overflow-x:auto;max-width:100%;padding:15px 20px 30px}.day-card{opacity:1;transform:none!important}}
+</style>
+
+
+<style>
+/* Direct horizontal day carousel: native sideways scrolling, touch swipe and mouse drag. */
+.schedule-scroll-section{height:auto!important;min-height:0; padding-bottom:30px;}
+.schedule-pin{position:relative;top:auto;height:auto;min-height:0;max-height:none;display:block;overflow-x:auto;overflow-y:hidden;perspective:1400px;padding:18px 0 54px;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:rgba(169,120,63,.65) rgba(169,120,63,.12);-webkit-overflow-scrolling:touch;cursor:grab;touch-action:pan-x pan-y;}
+.schedule-pin:active{cursor:grabbing}
+.schedule-main{width:max-content;max-width:none;margin:0;}
+.day-scroll{width:max-content;max-width:none;padding:22px max(6vw,24px) 32px;transform:none!important;}
+.day-card{flex-basis:min(76vw,410px);}
+.schedule-nav{position:sticky;left:0;z-index:20;width:100%;display:flex;align-items:center;justify-content:center;gap:18px;padding:0 20px 4px;pointer-events:none;}
+.schedule-arrow{pointer-events:auto;width:42px;height:42px;border-radius:50%;border:1px solid rgba(169,120,63,.48);background:rgba(255,248,239,.92);color:var(--maroon);font-size:1.8rem;line-height:1;display:grid;place-items:center;box-shadow:0 5px 18px rgba(94,43,40,.10);cursor:pointer;transition:transform .2s ease,background .2s ease;}
+.schedule-arrow:hover{transform:scale(1.08);background:#fff;}
+.schedule-nav-hint{font-size:.58rem;letter-spacing:.18em;font-weight:700;color:var(--gold);text-align:center;}
+.schedule-pin::-webkit-scrollbar{height:7px}.schedule-pin::-webkit-scrollbar-track{background:rgba(169,120,63,.10);border-radius:99px;margin:0 24px}.schedule-pin::-webkit-scrollbar-thumb{background:rgba(169,120,63,.58);border-radius:99px}
+@media(max-width:600px){.schedule-pin{padding:8px 0 40px}.schedule-nav{gap:12px}.schedule-arrow{width:38px;height:38px}.schedule-nav-hint{font-size:.5rem;letter-spacing:.12em}.day-scroll{padding-left:9vw;padding-right:9vw}}
+@media(prefers-reduced-motion:reduce){.schedule-pin{scroll-behavior:auto}.day-card{opacity:1!important;transform:none!important}}
+</style>
+
+
+<style id="compact-mobile-schedule-fix">
+/* Compact vertical layout for the sideways day carousel on phones. */
+@media (max-width: 600px) {
+  .schedule-scroll-section { padding-top: 24px !important; padding-bottom: 12px !important; }
+  .schedule-heading { padding-bottom: 12px !important; }
+  .schedule-pin {
+    height: auto !important; min-height: 0 !important; max-height: none !important;
+    display: block !important; padding: 8px 0 18px !important;
+    overflow-x: auto !important; overflow-y: hidden !important;
+  }
+  .schedule-nav { padding: 0 14px 2px !important; gap: 10px !important; }
+  .schedule-arrow { width: 36px !important; height: 36px !important; }
+  .schedule-nav-hint { font-size: .47rem !important; letter-spacing: .09em !important; }
+  .schedule-main { margin: 12px 0 0 !important; }
+  .day-scroll { align-items: stretch !important; padding: 8px 7vw 14px !important; gap: 14px !important; }
+  .day-card {
+    flex-basis: 86vw !important; min-height: 0 !important; height: auto !important;
+    padding: 19px 18px 17px !important; border-radius: 22px !important;
+  }
+  .day-date { margin-top: 18px !important; }
+  .day-card h3 { font-size: 2.85rem !important; }
+  .day-ornament { margin: 13px 0 8px !important; }
+  .day-event { padding: 11px 0 !important; }
+  .day-card-foot { margin-top: 22px !important; padding-top: 8px !important; }
+  .day-card:after { bottom: 34px !important; }
+  .day-card-wedding { min-height: 0 !important; height: auto !important; }
+}
+</style>
+
 </head>
 <body>
 
@@ -282,7 +358,7 @@ section{position:relative;overflow:hidden}
       <div class="hero-weds reveal r4">WEDS</div>
       <h1 class="hero-name reveal r5">SHRI</h1>
       <div class="hero-sub reveal r6">RadhaShri · Neha</div>
-      <div class="hero-date reveal r7">7 — 11 DECEMBER 2026</div>
+      <div class="hero-date reveal r7">6 — 11 DECEMBER 2026</div>
     </div>
 </div>
   <div class="scroll-hint">SCROLL TO BEGIN</div>
@@ -298,7 +374,7 @@ section{position:relative;overflow:hidden}
       <div class="countdown-box"><span class="countdown-number" id="minutes">00</span><span class="countdown-unit">MINUTES</span></div>
       <div class="countdown-box"><span class="countdown-number" id="seconds">00</span><span class="countdown-unit">SECONDS</span></div>
     </div>
-    <p class="countdown-note reveal">Until the wedding celebrations begin · 7 December 2026</p>
+    <p class="countdown-note reveal">Until the wedding celebrations begin · 6 December 2026</p>
   </div>
 </section>
 
@@ -311,51 +387,85 @@ section{position:relative;overflow:hidden}
     <p class="hindi invitation-copy reveal">चिरंजीवी रोहित &amp; सौभाग्यकांक्षिणी राधाश्री (नेहा)</p>
     <blockquote class="invitation-copy reveal">With the grace of the Almighty and the blessings of our elders, we warmly invite you to join the auspicious wedding celebrations of Rohit and RadhaShri. Your presence, love and blessings will make our celebration complete.</blockquote>
     <div class="divider reveal"></div>
-    <h2 class="section-date reveal">7–11 December 2026</h2>
+    <h2 class="section-date reveal">6–11 December 2026</h2>
     <div class="location reveal">RAJASTHAN</div>
   </div>
 </section>
 
-<section class="story-section">
-  <div class="container">
-    <div class="chapter reveal">CHAPTER I</div>
-    <h2 class="section-title hindi reveal">शुभारम्भ</h2>
-    <div class="section-date reveal">07 DECEMBER 2026</div>
-    <div class="location reveal">JAIPUR</div>
-    <div class="event-list">
-      <article class="event-card"><h3>Ganesh Pujan &amp; Yagyopavit Sanskar</h3><div class="event-time">8:15 AM</div><p class="event-desc">गणेश पूजन · यज्ञोपवीत संस्कार</p></article>
-      <article class="event-card"><h3>Baan Sakdi, Peela Chawal &amp; Mangal Geet</h3><div class="event-time">1:15 PM</div><p class="event-desc">बान साकड़ी · पीला चावल · मंगल गीत</p></article>
-    </div>
+<section class="schedule-scroll-section" id="wedding-schedule">
+  <div class="container schedule-heading">
+    <header class="schedule-header">
+      <div class="chapter reveal">THE CELEBRATIONS</div>
+      <h2 class="section-title hindi reveal schedule-title"><em>शुभ अवसरों की झलक</em></h2>
+      <p class="schedule-intro reveal">हर दिन, एक नई रस्म और हर रस्म के साथ जुड़ी एक खूबसूरत याद।</p>
+      <p class="schedule-description reveal">Join us as we celebrate love, family and timeless traditions. Swipe through the days to explore every ceremony and its details.</p>
+    </header>
   </div>
-</section>
+  <div class="schedule-pin" id="schedulePin">
+   <div class="schedule-nav" aria-label="Scroll through wedding days">
+     <button class="schedule-arrow schedule-prev" type="button" aria-label="Scroll to previous day">‹</button>
+     <span class="schedule-nav-hint">DRAG OR SCROLL SIDEWAYS TO EXPLORE</span>
+     <button class="schedule-arrow schedule-next" type="button" aria-label="Scroll to next day">›</button>
+   </div>
+  <main class="schedule-main" aria-label="Wedding celebrations schedule">
+  <ul class="day-scroll" aria-label="Wedding schedule by day" tabindex="0">
+    <li class="day-card reveal" data-day="06">
+      <div class="day-card-top"><span class="day-index">DAY 01</span><span class="day-place">JAIPUR</span></div>
+      <div class="day-date">SUNDAY</div>
+      <h3>06 <span>DECEMBER 2026</span></h3>
+      <div class="day-ornament">❧ ❖ ❧</div>
+      <div class="day-events">
+        <div class="day-event"><div><h4>Ganesh Pujan &amp; Yagyopavit Sanskar</h4><p>गणेश पूजन · यज्ञोपवीत संस्कार</p></div><time>8:15 AM</time></div>
+      </div>
+      <div class="day-card-foot">Auspicious beginnings</div>
+    </li>
 
-<section class="story-section">
-  <div class="container">
-    <div class="chapter reveal">CHAPTER II</div>
-    <h2 class="section-title hindi reveal">रंग, रस्में और संगीत</h2>
-    <div class="section-date reveal">10 DECEMBER 2026</div>
-    <div class="location reveal">SIKAR</div>
-    <div class="event-list">
-      <article class="event-card"><h3>Haldi</h3><div class="event-time">10:15 AM</div><p class="event-desc">हल्दी · Turmeric &amp; blessings</p></article>
-      <article class="event-card"><h3>Tilak – Sagai</h3><div class="event-time">4:15 PM</div><p class="event-desc">तिलक–सगाई</p></article>
-      <article class="event-card"><h3>Sangeet Ceremony</h3><div class="event-time">6:15 PM onwards</div><p class="event-desc">संगीत समारोह · Music &amp; dance</p></article>
-    </div>
+    <li class="day-card reveal" data-day="07">
+      <div class="day-card-top"><span class="day-index">DAY 02</span><span class="day-place">JAIPUR</span></div>
+      <div class="day-date">MONDAY</div>
+      <h3>07 <span>DECEMBER 2026</span></h3>
+      <div class="day-ornament">❧ ❖ ❧</div>
+      <div class="day-events">
+        <div class="day-event"><div><h4>Baan Sakdi, Peela Chawal &amp; Mangal Geet</h4><p>पीला चावल · बान साकड़ी · मंगल गीत</p></div><time>3:30 PM</time></div>
+      </div>
+      <div class="day-card-foot">Traditions &amp; blessings</div>
+    </li>
+
+    <li class="day-card reveal" data-day="10">
+      <div class="day-card-top"><span class="day-index">DAY 03</span><span class="day-place">SIKAR</span></div>
+      <div class="day-date">THURSDAY</div>
+      <h3>10 <span>DECEMBER 2026</span></h3>
+      <div class="day-ornament">❧ ❖ ❧</div>
+      <div class="day-events">
+        <div class="day-event"><div><h4>Haldi</h4><p>हल्दी · Turmeric &amp; blessings</p></div><time>10:15 AM</time></div>
+        <div class="day-event"><div><h4>Tilak – Sagai</h4><p>तिलक–सगाई</p></div><time>4:15 PM</time></div>
+        <div class="day-event"><div><h4>Sangeet Ceremony</h4><p>संगीत समारोह · Music &amp; dance</p></div><time>6:15 PM</time></div>
+        <div class="day-event"><div><h4>Swaruchi Bhoj</h4><p>स्वरुचि–भोज</p></div><time>7:00 PM onwards</time></div>
+      </div>
+      <div class="day-card-foot">Rituals, music &amp; celebration</div>
+    </li>
+
+    <li class="day-card reveal day-card-wedding" data-day="11">
+      <div class="day-card-top"><span class="day-index">DAY 04</span><span class="day-place">SIKAR</span></div>
+      <div class="day-date">FRIDAY · THE WEDDING DAY</div>
+      <h3>11 <span>DECEMBER 2026</span></h3>
+      <div class="day-ornament">❧ ❖ ❧</div>
+      <div class="day-events">
+        <div class="day-event"><div><h4>Bhaat – Mayra</h4><p>भात–मायरा</p></div><time>10:15 AM</time></div>
+        <div class="day-event"><div><h4>Chak</h4><p>चाक</p></div><time>1:15 PM</time></div>
+        <div class="day-event"><div><h4>Baraat Nikasi (Dhukav)</h4><p>बारात निकासी · ढुकाव</p></div><time>5:15 PM</time></div>
+        <div class="day-event"><div><h4>Swaruchi Bhoj</h4><p>स्वरुचि–भोज</p></div><time>7:00 PM onwards</time></div>
+        <div class="day-event"><div><h4>Panigrahan Sanskar</h4><p>पाणिग्रहण संस्कार · शुभरात्रि लग्नानुसार</p></div><time>Shubh Muhurat</time></div>
+      </div>
+      <div class="day-card-note">Baraat departure: 6:15 PM, as separately mentioned on the invitation.</div>
+      <div class="day-card-foot">The wedding celebrations</div>
+    </li>
+  </ul>
+  </main>
+  <div class="scroll-cue reveal" aria-hidden="true">
+    <svg viewBox="0 0 54 34" role="img"><rect x="2" y="7" width="27" height="20" rx="10"/><path d="M10 17h11m-4-4 4 4-4 4"/><path d="M34 17h15m-5-5 5 5-5 5" class="cue-arrow"/></svg>
+    <span>SCROLL TO MOVE THROUGH THE CELEBRATIONS</span>
   </div>
-</section>
-
-<section class="story-section grand">
-  <div class="container">
-    <div class="chapter reveal">CHAPTER III</div>
-    <h2 class="section-title hindi reveal">विवाह दिवस</h2>
-    <div class="section-date reveal">11 DECEMBER 2026</div>
-    <div class="location reveal">SIKAR</div>
-    <div class="event-list five">
-      <article class="event-card"><h3>Bhaat – Mayra</h3><div class="event-time">10:15 AM</div><p class="event-desc">भात–मायरा</p></article>
-      <article class="event-card"><h3>Chak</h3><div class="event-time">1:15 PM</div><p class="event-desc">चाक</p></article>
-      <article class="event-card"><h3>Baraat Nikasi (Dhukav)</h3><div class="event-time">6:15 PM</div><p class="event-desc">बारात निकासी · ढुकाव</p></article>
-      <article class="event-card"><h3>Swaruchi Bhoj</h3><div class="event-time">7:00 PM onwards</div><p class="event-desc">स्वरुचि–भोज</p></article>
-      <article class="event-card"><h3>Panigrahan Sanskar</h3><div class="event-time">As per auspicious muhurat</div><p class="event-desc">पाणिग्रहण संस्कार · शुभरात्रि लग्नानुसार</p></article>
-    </div>
   </div>
 </section>
 
@@ -371,8 +481,8 @@ section{position:relative;overflow:hidden}
       </article>
       <article class="venue reveal">
         <h3>Kalyanam Hotel &amp; Resort · Sikar</h3>
-        <p>Wedding celebrations on:<br><strong>10 and 11 December 2026</strong></p>
-        <a class="map-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Kalyanam+Hotel+%26+Resort%2C+Sikar%2C+Rajasthan">FIND VENUE IN MAPS ↗</a>
+        <p>Saanwali Road, Sikar, Rajasthan<br>Wedding celebrations on:<br><strong>10 and 11 December 2026</strong></p>
+        <a class="map-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Kalyanam+Hotel+%26+Resort%2C+Saanwali+Road%2C+Sikar%2C+Rajasthan">FIND VENUE IN MAPS ↗</a>
       </article>
     </div>
   </div>
@@ -407,7 +517,7 @@ section{position:relative;overflow:hidden}
     <p class="final-copy reveal">We look forward to celebrating these auspicious moments with you.</p>
     <p class="final-copy reveal">Please grace the occasion and bless the new couple.</p>
     <div class="final-mangal reveal">॥ शुभ मंगल ॥</div>
-    <div class="final-date reveal">7–11 December 2026 · Rajasthan</div>
+    <div class="final-date reveal">6–11 December 2026 · Rajasthan</div>
     <div class="footer-line reveal">A WEDDING CELEBRATION ROOTED IN LOVE &amp; TRADITION</div>
   </div>
 </section>
@@ -422,7 +532,7 @@ const observer=new IntersectionObserver((entries)=>{
   });
 },{threshold:.16,rootMargin:'0px 0px -35px 0px'});
 
-document.querySelectorAll('.reveal,.event-card').forEach((el,i)=>{
+document.querySelectorAll('.reveal,.event-card,.day-card').forEach((el,i)=>{
   if(!el.closest('.hero')) {
     el.style.transitionDelay=((i%4)*90)+'ms';
     observer.observe(el);
@@ -452,7 +562,72 @@ window.addEventListener('scroll',()=>{
 
 <script>
 (function(){
-  const target = new Date("2026-12-07T00:00:00+05:30").getTime();
+  const viewport=document.querySelector('.schedule-pin');
+  const track=document.querySelector('.day-scroll');
+  const cards=[...document.querySelectorAll('.day-card')];
+  if(!viewport||!track||!cards.length)return;
+  const prev=document.querySelector('.schedule-prev');
+  const next=document.querySelector('.schedule-next');
+  let raf=0, dragging=false, startX=0, startScroll=0, moved=false;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function updateCards(){
+    raf=0;
+    const center=viewport.getBoundingClientRect().left+viewport.clientWidth/2;
+    cards.forEach((card)=>{
+      const r=card.getBoundingClientRect();
+      const distance=(r.left+r.width/2-center)/(viewport.clientWidth*.72);
+      const abs=Math.min(1.8,Math.abs(distance));
+      const scale=Math.max(.78,1-abs*.13);
+      const rotateY=Math.max(-17,Math.min(17,distance*13));
+      const lift=Math.max(-20,22-abs*30);
+      card.style.transform=reduced?'none':`translate3d(0,${lift}px,${-abs*100}px) rotateY(${rotateY}deg) scale(${scale})`;
+      card.style.opacity=reduced?1:Math.max(.48,1-abs*.34);
+      card.style.zIndex=String(100-Math.round(abs*10));
+      card.classList.toggle('show',abs<1.05);
+    });
+    if(prev)prev.disabled=viewport.scrollLeft<=2;
+    if(next)next.disabled=viewport.scrollLeft+viewport.clientWidth>=viewport.scrollWidth-2;
+  }
+  function requestUpdate(){if(!raf)raf=requestAnimationFrame(updateCards)}
+  function step(dir){
+    const first=cards[0];
+    const gap=parseFloat(getComputedStyle(track).columnGap)||28;
+    const amount=(first?first.getBoundingClientRect().width:viewport.clientWidth*.78)+gap;
+    viewport.scrollBy({left:dir*amount,behavior:reduced?'auto':'smooth'});
+  }
+  prev?.addEventListener('click',()=>step(-1));
+  next?.addEventListener('click',()=>step(1));
+  viewport.addEventListener('scroll',requestUpdate,{passive:true});
+  window.addEventListener('resize',requestUpdate,{passive:true});
+  /* Convert ordinary mouse-wheel motion over the carousel into sideways movement. */
+  viewport.addEventListener('wheel',(e)=>{
+    if(Math.abs(e.deltaY)>Math.abs(e.deltaX)&&viewport.scrollWidth>viewport.clientWidth){
+      e.preventDefault();viewport.scrollLeft+=e.deltaY;
+    }
+  },{passive:false});
+  /* Click-and-drag on desktop; native touch gestures remain enabled on phones. */
+  viewport.addEventListener('pointerdown',(e)=>{
+    if(e.pointerType==='touch'||e.target.closest('button,a'))return;
+    dragging=true;moved=false;startX=e.clientX;startScroll=viewport.scrollLeft;
+    viewport.setPointerCapture?.(e.pointerId);
+  });
+  viewport.addEventListener('pointermove',(e)=>{
+    if(!dragging)return;
+    const dx=e.clientX-startX;if(Math.abs(dx)>4)moved=true;
+    viewport.scrollLeft=startScroll-dx;
+  });
+  const stopDrag=()=>{dragging=false;};
+  viewport.addEventListener('pointerup',stopDrag);
+  viewport.addEventListener('pointercancel',stopDrag);
+  viewport.addEventListener('lostpointercapture',stopDrag);
+  viewport.addEventListener('click',(e)=>{if(moved){e.preventDefault();e.stopPropagation();moved=false;}},true);
+  if(document.fonts?.ready)document.fonts.ready.then(requestUpdate);
+  requestUpdate();
+})();</script>
+
+<script>
+(function(){
+  const target = new Date("2026-12-06T08:15:00+05:30").getTime();
   const pad = n => String(Math.max(0,n)).padStart(2,"0");
   function updateCountdown(){
     const now = Date.now();

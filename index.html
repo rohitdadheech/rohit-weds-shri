@@ -1149,12 +1149,8 @@ window.addEventListener('scroll',()=>{
 })();
 </script>
 
-
-
-
-
-
-
+</body>
+</html>
 <style id="celebration-carousel-themes">
 /* A deliberate peek of the next invitation tile makes the sideways gallery discoverable. */
 @media(max-width:600px){
@@ -1596,72 +1592,3 @@ window.addEventListener('scroll',()=>{
   .first-card-swipe-cue,.swipe-cue-arrows span{animation:none}
 }
 </style>
-
-<!-- Scroll choreography: scrolling down automatically carries the celebration cards from left to right. -->
-<style id="forced-schedule-scroll-style">
-#wedding-schedule{position:relative!important;overflow:visible!important;padding-bottom:0!important}
-#wedding-schedule .schedule-pin{position:sticky!important;top:0!important;left:0!important;width:100%!important;height:100vh!important;height:100svh!important;min-height:100vh!important;min-height:100svh!important;max-height:none!important;display:flex!important;flex-direction:column!important;justify-content:center!important;overflow:hidden!important;padding:18px 0 42px!important;cursor:default!important;touch-action:pan-y!important;perspective:1400px}
-#wedding-schedule .schedule-main{display:block!important;width:100%!important;max-width:none!important;margin:0!important;overflow:visible!important}
-#wedding-schedule .day-scroll{display:flex!important;flex-wrap:nowrap!important;width:max-content!important;max-width:none!important;margin:0!important;padding:22px max(6vw,24px) 32px!important;transform:translate3d(0,0,0);transform-style:preserve-3d;will-change:transform;transition:none!important}
-#wedding-schedule .day-card{flex-shrink:0!important;transition:box-shadow .25s ease,border-color .25s ease,filter .25s ease!important;will-change:transform,opacity}
-#wedding-schedule .schedule-pin::-webkit-scrollbar{display:none!important}
-@media(max-width:600px){#wedding-schedule .schedule-pin{height:100vh!important;height:100svh!important;min-height:100vh!important;min-height:100svh!important;padding:12px 0 34px!important}#wedding-schedule .day-scroll{padding:8px 7vw 14px!important;gap:14px!important}}
-</style>
-<script id="forced-schedule-scroll-script">
-(function(){
- const section=document.getElementById('wedding-schedule');
- const pin=section&&section.querySelector('.schedule-pin');
- const track=section&&section.querySelector('.day-scroll');
- if(!section||!pin||!track)return;
- const cards=Array.from(track.querySelectorAll('.day-card'));
- if(!cards.length)return;
- let travel=0,startY=0,frame=0,measuring=false;
- const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
- function measure(){
-  if(measuring)return; measuring=true;
-  track.style.transform='translate3d(0,0,0)';
-  const sectionTop=section.getBoundingClientRect().top+window.scrollY;
-  startY=pin.getBoundingClientRect().top+window.scrollY;
-  travel=Math.max(0,track.scrollWidth-pin.clientWidth);
-  section.style.height=(startY-sectionTop+pin.clientHeight+travel)+'px';
-  section.style.minHeight='0px';
-  measuring=false; update();
- }
- function update(){
-  frame=0;
-  const progress=travel?clamp((window.scrollY-startY)/travel,0,1):0;
-  const x=-travel*progress;
-  track.style.transform='translate3d('+x+'px,0,0)';
-  const center=pin.clientWidth/2;
-  cards.forEach(card=>{
-   const cardCenter=card.offsetLeft+x+card.offsetWidth/2;
-   const distance=(cardCenter-center)/(pin.clientWidth*.72);
-   const abs=Math.min(1.8,Math.abs(distance));
-   card.style.transform='translate3d(0,'+Math.max(-10,12-abs*18)+'px,0) rotateY('+clamp(distance*9,-13,13)+'deg) scale('+Math.max(.84,1-abs*.095)+')';
-   card.style.opacity=String(Math.max(.58,1-abs*.24));
-   card.style.zIndex=String(100-Math.round(abs*10));
-   card.classList.toggle('show',abs<1.08);
-   card.style.filter=abs<.8?'saturate(1.04)':'saturate(.88)';
-  });
- }
- function requestUpdate(){if(!frame)frame=requestAnimationFrame(update)}
- cards.forEach((card,index)=>{
-  const button=card.querySelector('.day-card-next');
-  if(!button||index===cards.length-1)return;
-  button.addEventListener('click',event=>{
-   event.preventDefault();event.stopPropagation();
-   const next=cards[index+1];
-   const target=clamp((next.offsetLeft+next.offsetWidth/2-pin.clientWidth/2)/Math.max(1,travel),0,1);
-   window.scrollTo({top:startY+target*travel,behavior:'smooth'});
-  },true);
- });
- window.addEventListener('scroll',requestUpdate,{passive:true});
- window.addEventListener('resize',measure,{passive:true});
- window.addEventListener('load',measure,{once:true});
- if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measure);
- if('ResizeObserver' in window){const ro=new ResizeObserver(measure);ro.observe(track);ro.observe(pin)}
- setTimeout(measure,250);setTimeout(measure,900);measure();
-})();
-</script>
-</body>
-</html>

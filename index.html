@@ -623,33 +623,6 @@ section{position:relative;overflow:hidden}
   </div>
 </section>
 
-
-<section class="wish-interlude" id="a-wish-for-two" aria-labelledby="wish-title">
-  <div class="wish-inner">
-    <div class="wish-kicker">BEFORE THE FINAL BLESSING</div>
-    <h2 class="wish-title" id="wish-title">A little something from the heart</h2>
-    <p class="wish-subtitle">Every beautiful beginning deserves a beautiful wish. Choose a keepsake below and leave a little love for Rohit &amp; RadhaShri.</p>
-    <div class="wish-ornament" aria-hidden="true">❧ &nbsp; ❖ &nbsp; ❧</div>
-    <div class="wish-grid" aria-label="Choose a wedding blessing">
-      <button class="wish-card" type="button" aria-pressed="false">
-        <span class="wish-icon" aria-hidden="true">♡</span><strong class="wish-prompt">A wish for love</strong><span class="wish-prompt">Tap to reveal</span>
-        <span class="wish-hidden">May your love grow gentler, deeper and brighter with every passing year.</span>
-      </button>
-      <button class="wish-card" type="button" aria-pressed="false">
-        <span class="wish-icon" aria-hidden="true">✧</span><strong class="wish-prompt">A wish for joy</strong><span class="wish-prompt">Tap to reveal</span>
-        <span class="wish-hidden">May your home always echo with laughter, music and little reasons to celebrate.</span>
-      </button>
-      <button class="wish-card" type="button" aria-pressed="false">
-        <span class="wish-icon" aria-hidden="true">❀</span><strong class="wish-prompt">A wish for togetherness</strong><span class="wish-prompt">Tap to reveal</span>
-        <span class="wish-hidden">May you find your greatest strength in holding each other's hand through every season.</span>
-      </button>
-    </div>
-    <p class="wish-instruction">A small surprise is waiting behind each card</p>
-    <button class="wish-share" type="button" id="wishShare">Send the couple your good wishes&nbsp; ↗</button>
-    <p class="wish-feedback" id="wishFeedback" aria-live="polite">A little love goes a long way.</p>
-  </div>
-</section>
-
 <section class="final">
   <div class="final-inner">
     <div class="fire reveal">🔥</div>
@@ -1079,34 +1052,9 @@ window.addEventListener('scroll',()=>{
 })();
 </script>
 
-<script id="premium-wishes-script">
-(()=>{
- const section=document.querySelector('.wish-interlude'); if(!section)return;
- const cards=[...section.querySelectorAll('.wish-card')];
- const feedback=section.querySelector('#wishFeedback');
- cards.forEach(card=>card.addEventListener('click',()=>{
-   const open=card.getAttribute('aria-pressed')==='true';
-   card.setAttribute('aria-pressed',String(!open));
-   const opened=cards.filter(c=>c.getAttribute('aria-pressed')==='true').length;
-   feedback.textContent=opened===3?'Three wishes, one beautiful beginning. ✨':opened?'One lovely wish closer to forever.':'Choose a little blessing for the couple.';
- }));
- section.querySelector('#wishShare').addEventListener('click',()=>{
-   const selected=cards.filter(c=>c.getAttribute('aria-pressed')==='true').map(c=>c.querySelector('.wish-hidden').textContent.trim());
-   const wishes=selected.length?selected.join(' '):'Wishing you a lifetime of love, laughter and togetherness.';
-   const message=`Dear Rohit & RadhaShri, ${wishes} Congratulations on your wedding!`;
-   const url='https://wa.me/?text='+encodeURIComponent(message);
-   window.open(url,'_blank','noopener,noreferrer');
-   feedback.textContent='Your wish is ready to share. Thank you for being part of their story.';
- });
-})();
-</script>
-
 
 <script id="wish-initial-state-and-date-reveal">
 (()=>{
-  document.querySelectorAll('.wish-interlude .wish-card').forEach(card=>{
-    card.setAttribute('aria-pressed','false');
-  });
   const dateBlock=document.querySelector('.marriage-date-reveal');
   if(dateBlock && 'IntersectionObserver' in window){
     const io=new IntersectionObserver(entries=>{
